@@ -208,3 +208,5 @@ app-php/
 
 <img width="1131" height="427" alt="image" src="https://github.com/user-attachments/assets/1294e16a-23b6-4e2c-b771-5aede3e45310" />
 
+ ## Automação O arquivo `deploy.sh` automatiza os passos 4 a 9 deste roteiro (instalação, habilitação do serviço, firewall, cópia dos arquivos, permissões e SELinux). Para usá-lo, dentro da VM: `chmod +x deploy.sh && sudo ./deploy.sh`.
+ ! Não testado
