@@ -221,7 +221,8 @@ app-php/
    sudo ./deploy.sh
  ```
 6. Aplicação roda e mostra o endereço para acessar
-<img width="1038" height="532" alt="Captura de tela 2026-09-10 115426" src="https://github.com/user-attachments/assets/892c484c-8988-414a-86e7-178d1e527828" />
+<img width="1040" height="532" alt="Captura de tela 2026-09-10 115426" src="https://github.com/user-attachments/assets/810f2340-358f-4061-a09f-08b1c5383489" />
+
 
 
 
