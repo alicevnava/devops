@@ -201,7 +201,7 @@ sudo nano /var/www/html/index.php
 ## Estrutura do projeto
 
 ```
-app-php/
+exerciciophp/
 ├── index.php
 └── README.md
 ```
