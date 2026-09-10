@@ -15,6 +15,6 @@ systemctl start httpd
 git clone https://github.com/thiagoinacioalves/treinamento.git /tmp/devops
 
 # Copia o arquivo da aplicação para a pasta pública do Apache
-cp /tmp/devops/treinamento/Linux/app-php/index.php /var/www/html/
+cp /tmp/devops/Linux/app-php/index.php /var/www/html/
 # Reinicia o Apache
 systemctl restart httpd
