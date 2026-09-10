@@ -15,8 +15,8 @@ para reforçar os conceitos trabalhados no programa.
 Trilha de certificações sendo trabalhada durante o trainee, na seguinte ordem:
 
 1. EXIN DevOps Professional
-2. RHCSA (Red Hat Certified System Administrator)
-3. EXIN (BCS) Artificial Intelligence Foundation
+2. EXIN (BCS) Artificial Intelligence Foundation
+3. RHCSA (Red Hat Certified System Administrator)
 
 ## Autora
 
