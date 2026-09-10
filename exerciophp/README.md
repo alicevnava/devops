@@ -209,6 +209,19 @@ app-php/
 <img width="1131" height="427" alt="image" src="https://github.com/user-attachments/assets/1294e16a-23b6-4e2c-b771-5aede3e45310" />
 
  ## Automação 
- O arquivo `deploy.sh` automatiza os passos 4 a 9 deste roteiro (instalação, habilitação do serviço, firewall, cópia dos arquivos, permissões e SELinux). Para usá-lo, dentro da VM: `chmod +x deploy.sh && sudo ./deploy.sh`.
- <img width="1038" height="532" alt="image" src="https://github.com/user-attachments/assets/dbdfa770-c97d-4a87-8696-061cd0c251de" />
+ O arquivo `deploy.sh` automatiza os passos 4 a 9 deste roteiro (instalação, habilitação do serviço, firewall, cópia dos arquivos, permissões e SELinux). Para usá-lo, dentro da VM: 
+1. Clonar repositório/baixar a pasta (exercicio-php-vm)
+2. VM apta a baixar pacotes
+3. Usuário com permissão SUDO
+4. Para sistemas baseados em RHEL (Red Hat Enterprise Linux)
+5. Rodar os comandos nessa ordem:
+ ```
+   bash -n deploy.sh
+   chmod +x deploy.sh
+   sudo ./deploy.sh
+ ```
+6. Aplicação roda e mostra o endereço para acessar
+<img width="1038" height="532" alt="Captura de tela 2026-09-10 115426" src="https://github.com/user-attachments/assets/892c484c-8988-414a-86e7-178d1e527828" />
+
+
 
