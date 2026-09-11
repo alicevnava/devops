@@ -3,7 +3,7 @@
 Documentação do passo a passo realizado para publicar a aplicação `app-php`
 em uma máquina virtual Linux, com Apache (httpd) e PHP.
 
-Repositório: https://github.com/alicevnava/devops/tree/main/exerciophp
+Repositório: https://app.notion.com/p/Comandos-aplica-o-php-em-VM-3d7235df9b0e80eeb148d2e7ede4c9ac?source=copy_link
 
 ## Ambiente utilizado
 
