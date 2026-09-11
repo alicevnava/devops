@@ -3,7 +3,7 @@
 Documentação do passo a passo realizado para publicar a aplicação `app-php`
 em uma máquina virtual Linux, com Apache (httpd) e PHP.
 
-Notion: https://app.notion.com/p/Comandos-aplica-o-php-em-VM-3d7235df9b0e80eeb148d2e7ede4c9ac?source=copy_link
+Repositório: https://github.com/alicevnava/devops/tree/main/exerciophp
 
 ## Ambiente utilizado
 
@@ -57,6 +57,11 @@ sudo firewall-cmd --permanent --add-service=http
 sudo firewall-cmd --reload
 ```
 
+**Instalar o git**
+```bash
+sudo dnf install git -y
+```
+
 **Clonar os arquivos de código**
 ```bash
 git clone https://github.com/alicevnava/devops.git
@@ -66,10 +71,10 @@ Se já tiver a pasta e for excluir (sem volta):
 rm -rf devops
 ```
 
-**Rede com autenticação (proxy/certificado)**
-```bash
-git config --global http.sslVerify false
-```
+> Se o `git clone` der erro de **certificado SSL** (comum em redes com proxy/portal de autenticação), rode o comando abaixo e tente o clone de novo:
+> ```bash
+> git config --global http.sslVerify false
+> ```
 
 **Ver os arquivos que estão no repositório**
 ```bash
