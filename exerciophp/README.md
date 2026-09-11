@@ -3,6 +3,8 @@
 Documentação do passo a passo realizado para publicar a aplicação `app-php`
 em uma máquina virtual Linux, com Apache (httpd) e PHP.
 
+Repositório: https://github.com/alicevnava/devops/tree/main/exerciophp
+
 ## Ambiente utilizado
 
 | Item | Valor |
@@ -14,165 +16,149 @@ em uma máquina virtual Linux, com Apache (httpd) e PHP.
 | Linguagem | PHP |
 | Acesso à VM | SSH |
 
-Para conferir a versão do sistema, foi usado:
+---
 
+## Comandos — passo a passo manual
+
+**Verificar IP**
+```bash
+ip a
+```
+Utilizar no MobaXterm na sessão de SSH.
+
+**Verificar versão e distribuição**
 ```bash
 cat /etc/os-release
 ```
 
----
-
-## 1. Conectar na VM
-
-```bash
-ssh usuario@ip_da_vm
-```
-
-> Troque `usuario` e `ip_da_vm` pelos dados reais da sua VM.
-
----
-
-## 2. Instalar o Git na máquina de trabalho (se ainda não tiver)
-
-```bash
-sudo dnf install git -y
-```
-
----
-
-## 3. Clonar o repositório do treinamento
-
-```bash
-git clone https://github.com/thiagoinacioalves/treinamento.git
-cd ~/treinamento/Linux/app-php
-```
-
----
-
-## 4. Instalar o Apache e o PHP na VM
-
-No Oracle Linux (base RHEL), o pacote do Apache se chama `httpd`. O PHP e o
-módulo que integra o PHP ao Apache vêm em pacotes separados:
-
+**Instalar Apache (servidor web), PHP e seu interpretador**
 ```bash
 sudo dnf install httpd php php-cli -y
 ```
+`-y`: confirma automaticamente.
 
----
-
-## 5. Habilitar e iniciar o Apache
-
-O serviço precisa estar **habilitado** (inicia junto com o sistema) e
-**ativo** (rodando agora):
-
+**Ativar e rodar o Apache**
 ```bash
 sudo systemctl enable httpd
 sudo systemctl start httpd
 ```
+`enable`: inicia o Apache quando a VM ligar.
+`start`: inicia o Apache na sessão atual.
 
-Conferir se está rodando corretamente:
-
+**Checar o estado e a saúde do Apache**
 ```bash
 sudo systemctl status httpd
 ```
+`q`: sai da tela de status.
 
----
-
-## 6. Liberar a porta HTTP no firewall
-
-O Oracle Linux usa `firewalld` por padrão. Sem isso, o navegador não consegue
-alcançar a página mesmo com o Apache rodando:
-
+**Liberar a porta HTTP (porta 80) no firewall, para o navegador conseguir acessar**
 ```bash
 sudo firewall-cmd --permanent --add-service=http
 sudo firewall-cmd --reload
 ```
 
----
-
-## 7. Copiar a aplicação para a pasta pública do Apache
-
-A pasta pública padrão do Apache no Oracle Linux é `/var/www/html`:
-
+**Clonar os arquivos de código**
 ```bash
-sudo cp -r ~/treinamento/Linux/app-php/* /var/www/html/
+git clone https://github.com/alicevnava/devops.git
+```
+Se já tiver a pasta e for excluir (sem volta):
+```bash
+rm -rf devops
 ```
 
----
+**Rede com autenticação (proxy/certificado)**
+```bash
+git config --global http.sslVerify false
+```
 
-## 8. Ajustar posse (owner) e permissões dos arquivos
+**Ver os arquivos que estão no repositório**
+```bash
+ls devops/exerciophp/
+```
 
-O Apache roda com o usuário `apache`. Os arquivos precisam pertencer a esse
-usuário (ou pelo menos ser legíveis por ele):
+**Copiar o arquivo da aplicação para a pasta pública do Apache**
+```bash
+sudo cp devops/exerciophp/index.php /var/www/html/
+```
 
+**Ajustar dono e permissões**
 ```bash
 sudo chown -R apache:apache /var/www/html
 sudo chmod -R 755 /var/www/html
 ```
+O usuário do Apache é dono dos arquivos e tem permissão sobre eles.
 
----
-
-## 9. Ajustar o contexto do SELinux
-
-O Oracle Linux vem com o SELinux em modo `enforcing` por padrão. Mesmo com a
-permissão Unix correta, o Apache pode não conseguir ler os arquivos se o
-contexto do SELinux estiver errado. Para corrigir:
-
+**Ajustar o SELinux (segurança de controle de acesso)**
 ```bash
 sudo restorecon -Rv /var/www/html
 ```
 
-Para conferir o contexto aplicado:
-
+**Verificar o resultado**
 ```bash
-ls -Z /var/www/html
+hostname -I
 ```
+Mostra o IP da VM, para abrir no navegador.
 
----
-
-## 10. Acessar a aplicação pelo navegador
-
-Descobrir o IP da VM (se ainda não souber):
-
-```bash
-ip a
-```
-
-Depois, no navegador da máquina de trabalho, acessar:
-
+**Abrir no navegador**
 ```
 http://IP_DA_VM/index.php
 ```
 
-**Resultado esperado:** a página exibe a mensagem
-**"Página publicada com sucesso!"**, junto com informações do ambiente, do
-software do servidor web e a data/hora geradas pelo servidor.
-
 ---
 
-## 11. Testar que o PHP está sendo processado (e não servido como texto)
+## Script (deploy.sh)
 
-Se ao abrir `index.php` no navegador aparecer o **código PHP puro** em vez da
-página renderizada, o PHP não está sendo processado pelo Apache — nesse caso,
-reinicie o serviço depois de instalar o `php`:
+Automatiza a instalação, a cópia dos arquivos e o reinício do serviço.
 
+**Verificar IP**
 ```bash
-sudo systemctl restart httpd
+ip a
 ```
 
----
-
-## 12. Fazer uma alteração simples e confirmar que é refletida
-
-1. Editar o arquivo diretamente na pasta pública:
-
+**Verificar versão e distribuição**
 ```bash
-sudo nano /var/www/html/index.php
+cat /etc/os-release
 ```
 
-2. Alterar algum texto na página (por exemplo, uma mensagem de teste).
-3. Salvar (`Ctrl+O`, `Enter`, `Ctrl+X` no nano).
-4. Atualizar a página no navegador (F5) e confirmar que a alteração aparece.
+**Instalar git**
+```bash
+sudo dnf install git -y
+```
+
+**Clonar o repositório**
+```bash
+git clone https://github.com/alicevnava/devops.git
+```
+
+**Entrar na pasta**
+```bash
+cd devops/exerciophp
+```
+
+**Mostrar os arquivos da pasta**
+```bash
+ls
+```
+
+**Permitir executar o script**
+```bash
+chmod +x deploy.sh
+```
+
+**Executar o script**
+```bash
+sudo ./deploy.sh
+```
+
+**Mostrar o IP**
+```bash
+hostname -I
+```
+
+**Acessar no navegador**
+```
+http://IP_DA_VM/index.php
+```
 
 ---
 
@@ -197,32 +183,3 @@ sudo nano /var/www/html/index.php
 - [x] Alteração no arquivo refletida após nova requisição
 - [x] Owner (`apache:apache`) e permissões (`755`) ajustados
 - [x] Contexto do SELinux corrigido com `restorecon`
-
-## Estrutura do projeto
-
-```
-exerciciophp/
-├── index.php
-└── README.md
-```
-
-<img width="1131" height="427" alt="image" src="https://github.com/user-attachments/assets/1294e16a-23b6-4e2c-b771-5aede3e45310" />
-
- ## Automação 
- O arquivo `deploy.sh` automatiza os passos 4 a 9 deste roteiro (instalação, habilitação do serviço, firewall, cópia dos arquivos, permissões e SELinux). Para usá-lo, dentro da VM: 
-1. Clonar repositório/baixar a pasta (exercicio-php-vm)
-2. VM apta a baixar pacotes
-3. Usuário com permissão SUDO
-4. Para sistemas baseados em RHEL (Red Hat Enterprise Linux)
-5. Rodar os comandos nessa ordem:
- ```
-   bash -n deploy.sh
-   chmod +x deploy.sh
-   sudo ./deploy.sh
- ```
-6. Aplicação roda e mostra o endereço para acessar
-<img width="1040" height="532" alt="Captura de tela 2026-09-10 115426" src="https://github.com/user-attachments/assets/810f2340-358f-4061-a09f-08b1c5383489" />
-
-
-
-
