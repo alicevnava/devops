@@ -110,6 +110,7 @@ http://IP_DA_VM/index.php
 ```
 
 ---
+<img width="1919" height="1079" alt="Captura de tela 2026-09-09 160818" src="https://github.com/user-attachments/assets/564a8558-8b43-41f9-93d2-cc0a82297f2e" />
 
 ## Script (deploy.sh)
 
