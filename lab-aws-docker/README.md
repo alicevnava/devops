@@ -1,4 +1,4 @@
-<img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/b9235a9e-f221-4333-8ca6-bd90eb847237" /># Laboratório AWS com Docker
+# Laboratório AWS com Docker
 
 Empacotar uma aplicação de três camadas em containers Docker e orquestrar tudo com Docker Compose numa instância EC2 (Ubuntu).
 
