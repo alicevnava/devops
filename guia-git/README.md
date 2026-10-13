@@ -45,7 +45,7 @@ Cada documentação fica numa pasta própria, com o texto no `README.md` e os pr
 ```
 devops/
 ├── README.md              ← índice: um link para cada documentação
-├── lab-sei/
+├── NOME-DA-PASTA/
 │   ├── README.md
 │   └── imagens/
 └── NOME-DA-PASTA/
