@@ -20,9 +20,9 @@ documentação.
 | --- | --- |
 | [SEI/SIP 4.0](lab-sei/) | Instalação do SEI e do SIP 4.0.12.15 em Amazon Linux 2: Apache, PHP 7.3, MySQL 5.7, Memcached, Solr, agendamentos e HTTPS 
 | [Aplicação PHP](exerciophp/) | Publicação de uma aplicação PHP em máquina virtual 
-| Crontab | Agendamento de tarefas no Linux com cron 
-| Troubleshooting | Diagnóstico e correção de problemas em ambiente Linux 
-| AWS com Docker | Laboratório de containers Docker na AWS 
+| [Crontab](lab-agendamento/) | Agendamento de tarefas no Linux com cron 
+| [Troubleshooting](lab-troubleshooting/) | Diagnóstico e correção de problemas em ambiente Linux 
+| [AWS com Docker](lab-aws-docker/) | Laboratório de containers Docker na AWS 
 
 ## Guias
 
