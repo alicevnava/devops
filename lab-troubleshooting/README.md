@@ -6,6 +6,8 @@ Ambiente prático para treinar a identificação e a correção de falhas, simul
 
 **Fluxo de trabalho:** investigar → localizar a falha → consertar → explicar.
 
+<img width="1916" height="908" alt="image (1)" src="https://github.com/user-attachments/assets/dedacf04-3193-4c4d-827d-62df2657369c" />
+
 ---
 
 ## Arquitetura
@@ -56,6 +58,9 @@ Abra `http://<IP_DA_INSTANCIA>` no navegador e pressione **F12** (DevTools) → 
 
 **Resultado esperado:** a página abre, mas a lista de itens não carrega. A requisição para `/api/items` aparece com erro.
 
+<img width="634" height="360" alt="image (2)" src="https://github.com/user-attachments/assets/12f65771-2041-418f-8780-081f34942006" />
+
+
 ### 2. Conectar via SSH na instância
 
 No Git Bash:
@@ -89,7 +94,7 @@ sudo systemctl status nginx training-api postgresql@16-main --no-pager
 | training-api | active (running) |
 | **postgresql@16-main** | **inactive (dead)** ❌ |
 
-![Status dos serviços](img/01-status-servicos.png)
+<!--![Status dos serviços](img/01-status-servicos.png)-->
 
 ### 4. Testar cada camada
 
@@ -164,7 +169,7 @@ curl -v http://localhost/api/items
 
 Apareceu um segundo problema.
 
-![Permission denied](img/02-permission-denied.png)
+<!--![Permission denied](img/02-permission-denied.png)-->
 
 ### 9. Descobrir qual usuário a API usa no banco
 
@@ -207,7 +212,7 @@ sudo -u postgres psql -d training -c "\dp items"
 ```
 **Esperado:** agora aparece `training_app=r/postgres` (`r` = read, leitura).
 
-![Permissão aplicada](img/03-permissao-aplicada.png)
+<!--![Permissão aplicada](img/03-permissao-aplicada.png)-->
 
 ```bash
 curl http://localhost:3000/api/items
@@ -215,7 +220,7 @@ curl http://localhost/api/items
 ```
 **Esperado:** os dois retornam a lista de itens em JSON.
 
-![API funcionando](img/04-api-items-ok.png)
+<!--![API funcionando](img/04-api-items-ok.png)-->
 
 ### 13. Validar no navegador
 
@@ -223,7 +228,10 @@ Abra `http://<IP_DA_INSTANCIA>`.
 
 **Resultado esperado:** a página carrega com a lista de itens.
 
-![Página funcionando](img/05-pagina-web.png)
+<!--![Página funcionando](img/05-pagina-web.png)-->
+
+<img width="1914" height="989" alt="image (3)" src="https://github.com/user-attachments/assets/5e228ef1-14f1-4b39-84ba-a1ce407466fa" />
+
 
 ---
 
