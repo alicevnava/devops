@@ -1,4 +1,4 @@
-# Laboratório AWS com Docker
+<img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/b9235a9e-f221-4333-8ca6-bd90eb847237" /># Laboratório AWS com Docker
 
 Empacotar uma aplicação de três camadas em containers Docker e orquestrar tudo com Docker Compose numa instância EC2 (Ubuntu).
 
@@ -184,7 +184,7 @@ docker compose version
 ```
 **Esperado:** as versões do Docker e do Compose aparecem.
 
-![Docker instalado](img/01-docker-version.png)
+<!--![Docker instalado](img/01-docker-version.png)-->
 
 ---
 
@@ -457,7 +457,7 @@ docker compose ps
 
 **Esperado:** três containers — `db` e `backend` com `healthy`, `frontend` com `Up` e porta `0.0.0.0:80->80/tcp`.
 
-![Containers rodando](img/02-compose-ps.png)
+<!--![Containers rodando](img/02-compose-ps.png)-->
 
 ---
 
@@ -474,7 +474,7 @@ O último mostra só o código HTTP da página principal.
 
 **Esperado:** `200` nos três; o `/api/items` retorna os itens em JSON (passou por Nginx → backend → banco).
 
-![Validação no terminal](img/03-curl-validacao.png)
+<!--![Validação no terminal](img/03-curl-validacao.png)-->
 
 ### 8.2 Só a porta 80 está exposta
 
@@ -492,7 +492,10 @@ Abra `http://<IP_DA_INSTANCIA>`.
 
 **Esperado:** a página carrega com a lista de itens. No DevTools (F12 → Network), a chamada `items` retorna `200`. (Um `304` na página significa que o navegador usou o cache, porque nada mudou.)
 
-![Página no navegador](img/04-navegador.png)
+<img width="1914" height="989" alt="image (4)" src="https://github.com/user-attachments/assets/f92120bc-0999-484f-b1fc-ef27a3de50c9" />
+<img width="628" height="631" alt="image (5)" src="https://github.com/user-attachments/assets/548ace4c-83b4-4fd4-8993-fec091ac2eb3" />
+
+
 
 ---
 
