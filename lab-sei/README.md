@@ -778,8 +778,9 @@ No navegador (usuário `teste`, senha `teste`):
 - `http://SEU_ENDERECO/sip` → menu do SIP com o nome do órgão no topo
 - `http://SEU_ENDERECO/sei` → login do SIP e depois **Controle de Processos** do SEI
 
-<!-- IMAGEM: imagens/sip-menu.png -->
-<!-- IMAGEM: imagens/sei-controle-processos.png -->
+ ![Menu do SIP](imagens/sip-menu.png)
+
+ ![Controle de Processos do SEI](imagens/sei-controle-processos.png)
 
 ---
 
@@ -801,7 +802,7 @@ Esperado: `openjdk version "1.8.0_..."` e o usuário `solr`.
 O `/tmp` precisa de pelo menos 2 GB livres:
 
 ```bash
-df -h /tmp
+df -h /tmpvim +781 lab-sei/README.md
 cd /tmp
 wget https://archive.apache.org/dist/lucene/solr/8.2.0/solr-8.2.0.tgz
 wget https://archive.apache.org/dist/lucene/solr/8.2.0/solr-8.2.0.tgz.sha512
@@ -963,7 +964,7 @@ O SEI e o SIP têm tarefas automáticas cadastradas em Infra → Agendamentos. O
 
 A base de referência do SIP não tem o parâmetro `SIP_EMAIL_ADMINISTRADOR`, e sem ele o script de agendamento do SIP falha (`Parâmetro SIP_EMAIL_ADMINISTRADOR não encontrado`).
 
-Conferir:
+vim +781 lab-sei/README.mdConferir:
 
 ```bash
 mysql -u root -p sip -e "SELECT nome, valor FROM infra_parametro WHERE nome LIKE 'SIP_EMAIL%';"
@@ -1010,8 +1011,9 @@ sudo /usr/bin/php -c /etc/php.ini /opt/sip/scripts/AgendamentoTarefaSip.php
 - **Infra → Agendamentos** (SEI e SIP): a última execução das tarefas de periodicidade "Minuto" deve ser de hoje.
 - O `testarAgendamento` grava um registro em **Infra → Log** a cada 5 minutos. No SEI ele vem desativado: reativar para testar e, depois de conferir, desativar nos dois sistemas.
 
-<!-- IMAGEM: imagens/sip-agendamentos.png -->
-<!-- IMAGEM: imagens/sei-infra-log.png -->
+![Agendamentos do SIP](imagens/sip-agendamentos.png)
+
+![Infra Log do SEI](imagens/sei-infra-log.png)
 
 ---
 
@@ -1101,8 +1103,10 @@ Com `true`, o sistema mostra o aviso de chave de acesso padrão. Para removê-lo
 >
 > Documentos criados no editor só são indexados pelo Solr **depois de assinados**.
 
-<!-- IMAGEM: imagens/sei-documento-assinado.png -->
-<!-- IMAGEM: imagens/sei-pesquisa.png -->
+![Documento assinado no SEI](imagens/sei-documento-assinado.png)
+
+![Pesquisa no SEI](imagens/sei-pesquisa.png)
+
 <!-- IMAGEM: imagens/sei-erro-pdf.png -->
 
 ### SIP
@@ -1119,7 +1123,7 @@ Com `true`, o sistema mostra o aviso de chave de acesso padrão. Para removê-lo
 >
 > O login é a **Sigla** do cadastro, não o Nome.
 
-<!-- IMAGEM: imagens/sip-acessos.png -->
+![Acessos do SIP](imagens/sip-acessos.png)
 
 ---
 
