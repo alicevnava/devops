@@ -18,6 +18,12 @@ Trilha de certificações sendo trabalhada durante o trainee, na seguinte ordem:
 2. EXIN (BCS) Artificial Intelligence Foundation
 3. RHCSA (Red Hat Certified System Administrator)
 
+## Laboratórios
+
+| Laboratório | Descrição |
+| --- | --- |
+| [SEI/SIP 4.0](lab-sei/) | Instalação do SEI e do SIP 4.0.12.15 em Amazon Linux 2: Apache, PHP 7.3, MySQL 5.7, Memcached, Solr, agendamentos e HTTPS |
+
 ## Autora
 
 Alice Vivas Nava — [@alicevnava](https://github.com/alicevnava)
