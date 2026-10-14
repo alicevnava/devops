@@ -1,9 +1,11 @@
-# Over the Wire
+# Over the Wire 🐈‍⬛
 
-bandit.labs.overthewire.org
-2220
-bandit0
-próximo níivel: ssh [bandit6@bandit.labs.overthewire.org](mailto:bandit6@bandit.labs.overthewire.org) -p 2220
+Atividade feita pelo MobaXterm e CDM
+
+Remote host: bandit.labs.overthewire.org
+User: bandit (número do nível)
+Porta: 2220
+
 
 1. ls; cat readme
     
