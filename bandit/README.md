@@ -1,27 +1,13 @@
-<<<<<<< HEAD
 # Guia — OverTheWire: Bandit
 
 Resolução comentada do wargame **Bandit** da [OverTheWire](https://overthewire.org/wargames/bandit/), feita durante meus estudos de infraestrutura/DevOps.
 
-Cada nível traz:
-- **Enunciado** — o objetivo do nível (resumido)
-- **Explicação** — o conceito por trás da solução
-- **Comandos** — o que foi executado
-- **Senha obtida** — a senha revelada para o próximo nível
-
 > ⚠️ A OverTheWire pede que as senhas não sejam divulgadas publicamente, para não estragar o jogo de outras pessoas. Elas estão aqui apenas como registro pessoal de estudo.
 
 ## Como conectar
-
-A conexão é feita por **SSH**, sempre na porta **2220**:
-
-```bash
-ssh bandit0@bandit.labs.overthewire.org -p 2220
-```
-
 - `ssh`: conecta a um servidor remoto
 - `bandit0@...`: usuário do nível
-- `-p 2220`: porta do servidor (a padrão do SSH é 22, mas aqui é 2220)
+- `2220`: porta do servidor
 
 Ferramentas usadas: **MobaXterm** (terminal Linux no Windows) e o **Prompt de Comando (CMD)** do Windows, dependendo do nível.
 
