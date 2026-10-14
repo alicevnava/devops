@@ -700,4 +700,3 @@ cat /etc/bandit_pass/bandit33
 | Permissões | `chmod`, setuid, dono e grupo |
 | Automação | `cron`, scripts `.sh`, `md5sum` |
 | Git | `clone`, `log`, `show`, `branch`, `checkout`, `tag`, `add`, `commit`, `push` |
-=======
