@@ -1,4 +1,4 @@
-# DevOps — Trainee
+# Trainee
 
 Repositório com os estudos, exercícios e projetos práticos desenvolvidos
 durante o programa de trainee em infraestrutura (Linux / DevOps / IA
