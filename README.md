@@ -30,6 +30,9 @@ documentação.
 | --- | --- |
 | [Notion para o GitHub](guia-git/) | Passo a passo para publicar uma documentação do Notion neste repositório com Git |
 
+##Exercícios
+| [Usuários, grupos e sudo](lab-usuarios-grupos-sudo/) | Usuários, grupo compartilhado, permissões de diretório e sudo no Rocky Linux 10
+
 ## Certificações-alvo
 
 Trilha de certificações sendo trabalhada durante o trainee, na seguinte ordem:
