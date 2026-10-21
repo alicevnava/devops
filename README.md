@@ -32,9 +32,11 @@ documentação.
 
 ## Exercícios
 
-| Exercício | Descrição |
+Desafios práticos da trilha de estudos, organizados por fase, em [`exercicios/`](exercicios/).
+
+| Fase | Exercícios |
 | --- | --- |
-| [Usuários, grupos e sudo](lab-usuarios-grupos-sudo/) | Usuários, grupo compartilhado, permissões de diretório e sudo no Rocky Linux 10 |
+| [Fase 1 — Linux sólido](exercicios/fase-1-linux/) | [Usuários, grupos e sudo](exercicios/fase-1-linux/desafio-01-usuarios-grupos-sudo/) · [Pasta compartilhada (setgid, umask e ACL)](exercicios/fase-1-linux/desafio-02-pasta-compartilhada/) |
 
 ## Certificações-alvo
 
