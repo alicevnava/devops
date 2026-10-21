@@ -1,4 +1,4 @@
-# Laboratório de Usuários, Grupos e Sudo
+# Desafio 1 — Usuários, Grupos e Sudo
 
 Primeiro desafio da Fase 1 (Linux sólido) da trilha de estudos: preparar um servidor para que duas pessoas trabalhem num projeto compartilhado, com acesso controlado por grupo e permissão de administrador só para quem precisa.
 
@@ -198,4 +198,4 @@ $ exit
 
 ## Para pensar
 
-No Teste 2, o arquivo criado pelo `bruno` ficou com o grupo `bruno`, e não `site`, e com permissão só de leitura para o grupo. Ou seja, a `ana` não conseguiria editá-lo. Resolver isso, para que os arquivos novos herdem o grupo do diretório, é o assunto do próximo laboratório (SGID).
+No Teste 2, o arquivo criado pelo `bruno` ficou com o grupo `bruno`, e não `site`, e com permissão só de leitura para o grupo. Ou seja, a `ana` não conseguiria editá-lo. Resolver isso, para que os arquivos novos herdem o grupo do diretório, é o assunto do [Desafio 2](../desafio-02-pasta-compartilhada/).
