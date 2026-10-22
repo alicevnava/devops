@@ -11,3 +11,4 @@ Cada desafio parte de um cenário, como acontece no trabalho, e termina com test
 | [Desafio 3 — SELinux: o site que não abre](desafio-03-selinux-apache/) | Apache (`httpd`), `systemctl`, rótulos do SELinux (`ls -Z`), `ausearch`, `restorecon`, `mv` x `cp` |
 | [Desafio 4 — Processos e sinais: o servidor lento](desafio-04-processos-sinais/) | `top`, `ps`, PID, prioridade (`renice`), sinais (`kill`, SIGTERM, SIGKILL, SIGINT), `nohup` e `&` |
 | [Desafio 5 — systemd e journalctl: o serviço que não sobe](desafio-05-systemd-journalctl/) | Arquivo de unidade (`.service`), `systemctl start`/`enable`, `Restart=on-failure`, `journalctl` (`-u`, `--since`, `-b`, `--list-boots`), journal permanente |
+| [Desafio 6 — Pacotes com dnf: o servidor sem internet](desafio-06-pacotes-dnf/) | `dnf info`, `rpm -qf`/`-qc`/`-ql`, `dnf history` e `undo`, repositório local a partir da ISO (`mount`, `.repo`, GPG), `--repo` |
