@@ -36,7 +36,7 @@ Desafios práticos da trilha de estudos, organizados por fase, em [`exercicios/`
 
 | Fase | Exercícios |
 | --- | --- |
-| [Fase 1 — Linux sólido](exercicios/fase-1-linux/) | [Usuários, grupos e sudo](exercicios/fase-1-linux/desafio-01-usuarios-grupos-sudo/) · [Pasta compartilhada (setgid, umask e ACL)](exercicios/fase-1-linux/desafio-02-pasta-compartilhada/) · [SELinux: o site que não abre](exercicios/fase-1-linux/desafio-03-selinux-apache/) · [Processos e sinais: o servidor lento](exercicios/fase-1-linux/desafio-04-processos-sinais/) |
+| [Fase 1 — Linux sólido](exercicios/fase-1-linux/) | [Usuários, grupos e sudo](exercicios/fase-1-linux/desafio-01-usuarios-grupos-sudo/) · [Pasta compartilhada (setgid, umask e ACL)](exercicios/fase-1-linux/desafio-02-pasta-compartilhada/) · [SELinux: o site que não abre](exercicios/fase-1-linux/desafio-03-selinux-apache/) · [Processos e sinais: o servidor lento](exercicios/fase-1-linux/desafio-04-processos-sinais/) · [systemd e journalctl: o serviço que não sobe](exercicios/fase-1-linux/desafio-05-systemd-journalctl/) |
 
 ## Certificações-alvo
 
