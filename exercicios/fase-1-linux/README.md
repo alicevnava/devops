@@ -12,3 +12,4 @@ Cada desafio parte de um cenário, como acontece no trabalho, e termina com test
 | [Desafio 4 — Processos e sinais: o servidor lento](desafio-04-processos-sinais/) | `top`, `ps`, PID, prioridade (`renice`), sinais (`kill`, SIGTERM, SIGKILL, SIGINT), `nohup` e `&` |
 | [Desafio 5 — systemd e journalctl: o serviço que não sobe](desafio-05-systemd-journalctl/) | Arquivo de unidade (`.service`), `systemctl start`/`enable`, `Restart=on-failure`, `journalctl` (`-u`, `--since`, `-b`, `--list-boots`), journal permanente |
 | [Desafio 6 — Pacotes com dnf: o servidor sem internet](desafio-06-pacotes-dnf/) | `dnf info`, `rpm -qf`/`-qc`/`-ql`, `dnf history` e `undo`, repositório local a partir da ISO (`mount`, `.repo`, GPG), `--repo` |
+| [Desafio 7 — Discos, LVM e fstab: o espaço que acabou](desafio-07-discos-lvm-fstab/) | `fdisk` (GPT), `pvcreate`, `vgcreate`, `lvcreate`, `mkfs.xfs`, `/etc/fstab` com UUID, `mount -a`, `lvextend -r`, swap (`mkswap`, `swapon`) |
