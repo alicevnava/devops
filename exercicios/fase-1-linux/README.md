@@ -14,6 +14,7 @@ Cada desafio parte de um cenário, como acontece no trabalho, e termina com test
 | 4 — Processos e sinais | 1 (usuário `bruno`) |
 | 8 — Rede no servidor | 3 (Apache nas portas 80 e 8080) |
 | 9 — SSH com chave | 1 (usuário `ana`, para o teste) e 8 (IP fixo `192.168.50.10`) |
+| 10 — cron, timers e tar | 2 (`/srv/site` com ACL da Carla) e 7 (`/dados/site`) |
 
 - **Ambiente:** Rocky Linux 10 (Minimal Install) numa VM, com um usuário administrador (membro do grupo `wheel`). Os desafios foram feitos no Hyper-V; em outro virtualizador, os passos do Linux são os mesmos.
 - **Faça um ponto de verificação (snapshot) da VM** antes de cada desafio, para poder voltar se algo der errado.
@@ -31,3 +32,4 @@ Cada desafio parte de um cenário, como acontece no trabalho, e termina com test
 | [Desafio 7 — Discos, LVM e fstab: o espaço que acabou](desafio-07-discos-lvm-fstab/) | `fdisk` (GPT), `pvcreate`, `vgcreate`, `lvcreate`, `mkfs.xfs`, `/etc/fstab` com UUID, `mount -a`, `lvextend -r`, swap (`mkswap`, `swapon`) |
 | [Desafio 8 — Rede no servidor: o IP que não para quieto](desafio-08-rede/) | `nmcli` (IP fixo, conexões), `hostnamectl`, `/etc/hosts`, `getent`, `firewall-cmd` (serviços, portas, `--permanent`), rede interna no Hyper-V |
 | [Desafio 9 — SSH com chave: chega de senha](desafio-09-ssh-chave/) | `ssh-keygen` (ed25519, frase secreta), `authorized_keys` e permissões, `known_hosts` e impressão digital, `sshd_config.d`, `sshd -t`/`-T`, `PasswordAuthentication`, `PermitRootLogin` |
+| [Desafio 10 — cron, timers e tar: o backup que ninguém fazia](desafio-10-backup-cron-timer/) | `tar` com `--acls`/`--selinux`/`--xattrs`, teste de restauração, script com `date` e rotação (`find -mtime`), `crontab`, timer do systemd (`OnCalendar`, `Persistent`, `Type=oneshot`), `systemd-analyze verify` |
