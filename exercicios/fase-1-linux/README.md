@@ -4,6 +4,21 @@ Exercícios da Fase 1 da trilha de estudos: administração de servidores Linux,
 
 Cada desafio parte de um cenário, como acontece no trabalho, e termina com testes que provam que o resultado está certo.
 
+## Como refazer
+
+- **Faça os desafios em ordem, na mesma VM.** Eles dependem uns dos outros:
+
+| Desafio | Usa o que foi criado em |
+| --- | --- |
+| 2 — Pasta compartilhada | 1 (usuários `ana` e `bruno`, grupo `site`, `/srv/site`) |
+| 4 — Processos e sinais | 1 (usuário `bruno`) |
+| 8 — Rede no servidor | 3 (Apache nas portas 80 e 8080) |
+
+- **Ambiente:** Rocky Linux 10 (Minimal Install) numa VM, com um usuário administrador (membro do grupo `wheel`). Os desafios foram feitos no Hyper-V; em outro virtualizador, os passos do Linux são os mesmos.
+- **Faça um ponto de verificação (snapshot) da VM** antes de cada desafio, para poder voltar se algo der errado.
+- **Valores entre `< >`** nos comandos, como `<PID_DO_YES>` ou `<UUID_DO_LVSITE>`, mudam em cada máquina: troque pelo valor que aparecer no seu terminal. As saídas mostradas nos READMEs são exemplos reais, e os números delas (PIDs, UUIDs, IDs de transação, IPs do DHCP) serão diferentes no seu ambiente.
+- **A tabela "Erros que aconteceram"** de cada desafio mostra comandos que **falharam**, com a correção. Para refazer, siga só o **Passo a passo**.
+
 | Desafio | Tópicos |
 | --- | --- |
 | [Desafio 1 — Usuários, grupos e sudo](desafio-01-usuarios-grupos-sudo/) | `useradd`, `passwd`, `groupadd`, `usermod`, `chgrp`, `chmod` numérico, grupo `wheel` |

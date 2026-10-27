@@ -118,6 +118,8 @@ ps -eo pid,user,%cpu,command --sort=-%cpu | head -n 6
 
 O culpado é o `yes`, do usuário `bruno`, PID `230954`.
 
+> ⚠️ Os PIDs mudam a cada execução. Nos comandos abaixo, troque `<PID_DO_YES>` e `<PID_DO_SLEEP>` pelos números que aparecerem no **seu** `ps`; os valores das saídas são só exemplos.
+
 > ℹ️ O `bash -c while true...` é do MobaXterm: ele roda esse laço para mostrar a barra de monitoramento de CPU, memória e disco no rodapé da janela.
 
 | | `top` | `ps` |
@@ -129,12 +131,12 @@ O culpado é o `yes`, do usuário `bruno`, PID `230954`.
 ### 2. Baixar a prioridade
 
 ```bash
-sudo renice -n 19 -p 230954
+sudo renice -n 19 -p <PID_DO_YES>
 ```
 
 - `renice` muda a prioridade de um processo que já está rodando.
 - `-n 19` define a menor prioridade possível.
-- `-p 230954` indica o PID do processo.
+- `-p <PID_DO_YES>` indica o PID do processo (no exemplo, `230954`).
 - O `sudo` é necessário porque um usuário comum não pode mudar a prioridade de processos de outro usuário.
 
 **Resultado obtido:**
@@ -164,20 +166,20 @@ ps -u bruno -o pid,ni,%cpu,command
 ### 3. Encerrar só o culpado
 
 ```bash
-sudo kill 230954
+sudo kill <PID_DO_YES>
 ```
 
 - `kill` envia um sinal a um processo. Sem número, envia o **SIGTERM** (15), o pedido "educado".
 - O `sudo` é necessário porque só o dono do processo (ou o root) pode enviar sinais a ele.
 
-Se o processo ignorasse o SIGTERM e continuasse aparecendo, o próximo passo seria `sudo kill -9 230954` (SIGKILL).
+Se o processo ignorasse o SIGTERM e continuasse aparecendo, o próximo passo seria `sudo kill -9 <PID_DO_YES>` (SIGKILL).
 
 ### 4. Limpeza
 
 Ao final, encerrar também o relatório do Bruno, que só existia para o cenário:
 
 ```bash
-sudo kill 221533
+sudo kill <PID_DO_SLEEP>
 ```
 
 ---
@@ -200,7 +202,7 @@ O `yes` sumiu e o `sleep 3000` continuou rodando.
 |---|---|---|
 | O terminal ficou preso depois de iniciar os processos | O `sleep 3000` foi escrito sem o `&`, na mesma linha do `yes`, e rodou em primeiro plano | **Ctrl+C** para interromper e rodar de novo `nohup sleep 3000 &` |
 | `renice` e `kill` sem `sudo` falharam | Um usuário comum só pode mexer nos próprios processos | Usar `sudo` |
-| `renice: bad process ID value: PID` | O texto `PID` foi digitado literalmente, em vez do número | Usar o número do processo: `sudo renice -n 19 -p 230954` |
+| `renice: bad process ID value: PID` | O texto `PID` foi digitado literalmente, em vez do número | Usar o número do processo: `sudo renice -n 19 -p <PID_DO_YES>` |
 
 ---
 

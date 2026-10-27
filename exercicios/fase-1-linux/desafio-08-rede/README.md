@@ -102,6 +102,8 @@ IP4.DOMAIN[1]:                          mshome.net
 
 A `eth1`, recém-adicionada, aparecia como `desconectado`, sem IP.
 
+> ⚠️ Os endereços da `eth0` vêm do Default Switch e mudam de máquina para máquina. Os nomes das placas também podem ser outros: confira no **seu** `nmcli device status` qual é a placa nova e use esse nome no lugar de `eth1` nos comandos abaixo.
+
 ### 2. Definir o nome do servidor
 
 ```bash

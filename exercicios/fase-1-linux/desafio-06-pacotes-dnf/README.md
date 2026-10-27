@@ -184,12 +184,15 @@ ID     | Linha de comando | Data e hora      | Ação(ões) | Alterado
 - Cada transação tem um **ID**. A transação 4 alterou 12 pacotes: o `httpd` e as dependências instaladas junto.
 
 ```bash
-dnf history info 6
-sudo dnf history undo 6
+dnf history info <ID_DA_REMOCAO>
+sudo dnf history undo <ID_DA_REMOCAO>
 ```
 
 - `history info` mostra o que uma transação fez; vale conferir antes de desfazer.
-- `history undo 6` faz o **contrário** da transação 6. Como ela removeu o `tree`, o contrário é instalar de novo.
+- `history undo <ID_DA_REMOCAO>` faz o **contrário** da transação indicada (no exemplo, a `6`). Como ela removeu o `tree`, o contrário é instalar de novo.
+- Troque `<ID_DA_REMOCAO>` pelo ID da linha `remove tree` no **seu** `dnf history`: os números dependem do histórico de cada máquina.
+
+**Resultado esperado** (a saída deste passo não foi registrada): o `dnf` mostra `Instalando: tree` e termina com `Concluído!`. Depois, o `tree /etc/httpd` volta a funcionar, e o `dnf history` mostra uma transação nova no topo.
 
 ---
 
@@ -208,10 +211,10 @@ sr0           11:0    1 1024M  0 rom
 sr1           11:1    1  1,9G  0 rom
 ```
 
-- `sr0` com `1024M` é uma unidade de DVD **vazia**; `sr1` com `1,9G` é a ISO.
+- `sr0` com `1024M` é uma unidade de DVD **vazia**; `sr1` com `1,9G` é a ISO. Troque `<UNIDADE_DA_ISO>` pela unidade que, no **seu** `lsblk`, tem o tamanho da ISO (no exemplo, `sr1`).
 
 ```bash
-sudo mount /dev/sr1 /mnt
+sudo mount /dev/<UNIDADE_DA_ISO> /mnt
 ```
 
 - `mount` liga o conteúdo de um disco a uma pasta. O aviso `mounted read-only` é normal: uma ISO é só leitura.
@@ -328,9 +331,11 @@ O `openssl` é a biblioteca de criptografia do sistema: rebaixá-la pode trazer 
 ### Correção: desfazer a transação
 
 ```bash
-dnf history info 8
-sudo dnf history undo 8
+dnf history info <ID_DA_INSTALACAO>
+sudo dnf history undo <ID_DA_INSTALACAO>
 ```
+
+- Troque `<ID_DA_INSTALACAO>` pelo ID da instalação feita com `--repo local-minimal` no seu `dnf history` (no exemplo, `8`).
 
 ```
 Atualizando:
@@ -383,7 +388,7 @@ As bibliotecas estão nas versões atualizadas e o repositório local está desl
 |---|---|---|
 | `ls /mnt/BaseOS` não achou a pasta | A ISO **Minimal** tem um repositório só, com outro nome | Procurar a `repodata` com `find /mnt -maxdepth 2 -name repodata` |
 | O `.repo` ficou com o nome da chave no `baseurl` e as duas chaves no `gpgkey` | Confusão entre o que vai em cada linha | `baseurl` = pasta do repositório; `gpgkey` = caminho completo de **uma** chave |
-| A instalação pelo repositório local rebaixou o `curl` e o `openssl-libs` | A ISO tem versões antigas, e o `--repo` impediu o uso dos repositórios atualizados | `sudo dnf history undo 8` |
+| A instalação pelo repositório local rebaixou o `curl` e o `openssl-libs` | A ISO tem versões antigas, e o `--repo` impediu o uso dos repositórios atualizados | `sudo dnf history undo <ID_DA_INSTALACAO>` (no exemplo, `8`) |
 
 ---
 

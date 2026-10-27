@@ -184,8 +184,10 @@ Para não digitar o UUID à mão, no vi:
 Linha acrescentada:
 
 ```
-UUID=89e4896e-f7ba-4774-b8c9-140f545b492e /dados/site xfs defaults 0 0
+UUID=<UUID_DO_LVSITE> /dados/site xfs defaults 0 0
 ```
+
+> ⚠️ O UUID é diferente em cada máquina: use o que o **seu** `blkid` mostrar. No exemplo, a linha ficou `UUID=89e4896e-f7ba-4774-b8c9-140f545b492e /dados/site xfs defaults 0 0`.
 
 **Testar antes de qualquer reboot:**
 
@@ -224,10 +226,11 @@ sudo mkswap /dev/vgdados/lvswap
 Linha acrescentada ao `/etc/fstab` (com o mesmo truque do vi):
 
 ```
-UUID=90f05007-ed0e-4c18-8391-309436397485 none swap defaults 0 0
+UUID=<UUID_DO_LVSWAP> none swap defaults 0 0
 ```
 
 - `none`: a swap não é montada em nenhuma pasta. `swap`: o tipo.
+- Use o UUID que o **seu** `mkswap` (ou `blkid /dev/vgdados/lvswap`) mostrar. No exemplo: `90f05007-ed0e-4c18-8391-309436397485`.
 
 ```bash
 sudo systemctl daemon-reload

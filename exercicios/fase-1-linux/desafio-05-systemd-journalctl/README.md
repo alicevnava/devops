@@ -252,6 +252,8 @@ sudo kill -9 <MAIN_PID>
 sudo reboot
 ```
 
+- Troque `<MAIN_PID>` pelo número da linha `Main PID` do **seu** `systemctl status`; ele muda a cada início do serviço.
+
 Depois do reboot:
 
 ```
