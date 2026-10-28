@@ -37,6 +37,7 @@ Desafios práticos da trilha de estudos, organizados por fase, em [`exercicios/`
 | Fase | Exercícios |
 | --- | --- |
 | [Fase 1 — Linux sólido](exercicios/fase-1-linux/) | [Usuários, grupos e sudo](exercicios/fase-1-linux/desafio-01-usuarios-grupos-sudo/) · [Pasta compartilhada (setgid, umask e ACL)](exercicios/fase-1-linux/desafio-02-pasta-compartilhada/) · [SELinux: o site que não abre](exercicios/fase-1-linux/desafio-03-selinux-apache/) · [Processos e sinais: o servidor lento](exercicios/fase-1-linux/desafio-04-processos-sinais/) · [systemd e journalctl: o serviço que não sobe](exercicios/fase-1-linux/desafio-05-systemd-journalctl/) · [Pacotes com dnf: o servidor sem internet](exercicios/fase-1-linux/desafio-06-pacotes-dnf/) · [Discos, LVM e fstab: o espaço que acabou](exercicios/fase-1-linux/desafio-07-discos-lvm-fstab/) · [Rede no servidor: o IP que não para quieto](exercicios/fase-1-linux/desafio-08-rede/) · [SSH com chave: chega de senha](exercicios/fase-1-linux/desafio-09-ssh-chave/) · [cron, timers e tar: o backup que ninguém fazia](exercicios/fase-1-linux/desafio-10-backup-cron-timer/) · [Boot e recuperação da senha do root](exercicios/fase-1-linux/desafio-11-boot-senha-root/) |
+| [Fase 2 — Redes e segurança](exercicios/fase-2-redes/) | [O caminho de uma requisição: cada erro conta uma história](exercicios/fase-2-redes/desafio-01-caminho-requisicao/) |
 
 ## Certificações-alvo
 
