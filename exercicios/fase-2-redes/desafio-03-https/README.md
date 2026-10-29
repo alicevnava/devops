@@ -97,16 +97,19 @@ chmod 600 ca-key.pem
 **Certificado raiz** (autoassinado, válido por 5 anos):
 
 ```bash
-openssl req -x509 -new -key ca-key.pem -sha256 -days 1825 -out ca-cert.pem -subj "/C=BR/ST=DF/O=Estudos/CN=AC Estudos"
+openssl req -new -x509 -key ca-key.pem -out ca-cert.pem -days 1825 -subj "/C=BR/ST=DF/O=Estudos/CN=AC Estudos"
+openssl x509 -noout -subject -issuer -dates -in ca-cert.pem
 ```
 
 | Parte | O que faz |
 |---|---|
-| `req -x509 -new` | cria um certificado já assinado (em vez de um pedido) |
+| `req -new -x509` | cria um certificado já assinado (em vez de um pedido) |
 | `-key ca-key.pem` | assina com a chave da própria CA → **autoassinado** |
-| `-sha256` | algoritmo de hash da assinatura |
 | `-days 1825` | validade: 5 anos |
 | `-subj "/C=BR/ST=DF/O=Estudos/CN=AC Estudos"` | identificação: país, estado, organização e nome comum |
+| `x509 -noout -subject -issuer -dates` | confere o resultado: na CA raiz, `subject` e `issuer` são **iguais** |
+
+> O OpenSSL atual já usa SHA-256 por padrão na assinatura, então não é preciso passar `-sha256`.
 
 ### 2. Chave e CSR do servidor
 
@@ -140,7 +143,8 @@ extendedKeyUsage=serverAuth
 **Assinar o CSR com a CA** (1 ano):
 
 ```bash
-openssl x509 -req -in servidor1.csr -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out servidor1-cert.pem -days 365 -sha256 -extfile san.ext
+openssl x509 -req -in servidor1.csr -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out servidor1-cert.pem -days 365 -extfile san.ext
+openssl x509 -noout -subject -issuer -dates -ext subjectAltName -in servidor1-cert.pem
 ```
 
 | Parte | O que faz |
@@ -149,6 +153,7 @@ openssl x509 -req -in servidor1.csr -CA ca-cert.pem -CAkey ca-key.pem -CAcreates
 | `-CA ca-cert.pem -CAkey ca-key.pem` | quem assina: a CA |
 | `-CAcreateserial` | cria o `ca-cert.srl`, que guarda o número de série do próximo certificado |
 | `-extfile san.ext` | inclui as extensões (SAN etc.) |
+| `x509 -noout ... -ext subjectAltName` | confere: `issuer` = AC Estudos e o SAN com os três nomes |
 
 **Conferir a assinatura:**
 
@@ -500,6 +505,7 @@ O primeiro pedido, antes do 301, sempre sai em texto puro. O cabeçalho **HSTS**
 
 | Sintoma | Causa | Correção |
 |---|---|---|
+| `openssl: comando não encontrado` | A instalação mínima do Rocky traz só a biblioteca (`openssl-libs`), não a ferramenta de linha de comando | `sudo dnf install -y openssl` |
 | Arquivo `ca-key.pem4096` criado | Faltou o espaço entre o nome do arquivo e o tamanho da chave | `openssl genrsa -out ca-key.pem 4096` |
 | Arquivos da CA fora de `~/ca` | Foram criados antes de a pasta existir | `mkdir ~/ca` primeiro e mover os arquivos com `mv` |
 | `genrasa`, `-subj` sem valor, `- CAcreateserial` | Erros de digitação | Conferir o comando antes de dar Enter; ler a mensagem de erro do `openssl` |
