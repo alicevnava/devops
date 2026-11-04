@@ -45,6 +45,7 @@ def verificar_backup(arquivo):
         sys.exit(1)
     log(f"Backup verificado: {len(itens)} itens")
 
+
 def rotacionar():
     backups = sorted(
         Path(DESTINO).glob(f"{PREFIXO}-20*.tar.gz"),
@@ -56,6 +57,7 @@ def rotacionar():
         antigo.unlink()
 
 def main():
+
     if os.geteuid() != 0:
         log("ERRO: rode como root (sudo)")
         sys.exit(1)
