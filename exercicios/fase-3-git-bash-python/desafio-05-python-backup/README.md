@@ -88,6 +88,7 @@ def verificar_backup(arquivo):
         sys.exit(1)
     log(f"Backup verificado: {len(itens)} itens")
 
+
 def rotacionar():
     backups = sorted(
         Path(DESTINO).glob(f"{PREFIXO}-20*.tar.gz"),
@@ -97,6 +98,7 @@ def rotacionar():
     for antigo in backups[MANTER:]:
         log(f"Apagando {antigo}")
         antigo.unlink()
+
 
 def main():
     if os.geteuid() != 0:
@@ -292,7 +294,8 @@ O timer continua com a versão em Bash (`/usr/local/bin/backup-site.sh`); as dua
 |---|---|---|
 | `-bash: import: comando não encontrado` | Código Python digitado no terminal | Escrever dentro do `scripts/backup.py`, pelo `vi` |
 | O primeiro teste de falha terminou com sucesso | A linha `ORIGENS` não tinha sido alterada | Conferir com `grep ORIGENS scripts/backup.py` antes de rodar |
-| Funções separadas por uma linha em branco (ainda antes de `rotacionar` e de `main`) | Estilo (o Python roda igual) | PEP 8 pede duas linhas em branco entre funções: um ajuste pequeno para um próximo pull request |
+| Funções separadas por uma linha em branco antes de `rotacionar` e de `main` | Estilo (o Python roda igual) | PEP 8 pede duas linhas em branco entre funções: corrigido no PR #11 |
+| No PR #11, a linha em branco de `main` entrou **depois** do `def main():`, e o merge foi feito assim | No `vi`, `o` (minúsculo) abre a linha **abaixo**; `O` (maiúsculo), **acima**. O `git diff` mostrava o `+` embaixo do `def`, e a revisão deixou passar | PR #12: `dd` na linha errada e `O` acima do `def`. Lição: no `git diff` e no **Files changed**, olhar **onde** está cada `+`, não só quantos são. O Git pode mostrar a mesma mudança de jeitos diferentes (no PR #12, como se o `def main():` tivesse mudado de lugar); o que vale é o resultado final |
 
 ---
 
