@@ -56,8 +56,8 @@ def rotacionar():
         log(f"Apagando {antigo}")
         antigo.unlink()
 
-def main():
 
+def main():
     if os.geteuid() != 0:
         log("ERRO: rode como root (sudo)")
         sys.exit(1)
