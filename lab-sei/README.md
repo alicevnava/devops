@@ -802,7 +802,7 @@ Esperado: `openjdk version "1.8.0_..."` e o usuário `solr`.
 O `/tmp` precisa de pelo menos 2 GB livres:
 
 ```bash
-df -h /tmpvim +781 lab-sei/README.md
+df -h /tmp
 cd /tmp
 wget https://archive.apache.org/dist/lucene/solr/8.2.0/solr-8.2.0.tgz
 wget https://archive.apache.org/dist/lucene/solr/8.2.0/solr-8.2.0.tgz.sha512
@@ -964,7 +964,7 @@ O SEI e o SIP têm tarefas automáticas cadastradas em Infra → Agendamentos. O
 
 A base de referência do SIP não tem o parâmetro `SIP_EMAIL_ADMINISTRADOR`, e sem ele o script de agendamento do SIP falha (`Parâmetro SIP_EMAIL_ADMINISTRADOR não encontrado`).
 
-vim +781 lab-sei/README.mdConferir:
+Conferir:
 
 ```bash
 mysql -u root -p sip -e "SELECT nome, valor FROM infra_parametro WHERE nome LIKE 'SIP_EMAIL%';"
