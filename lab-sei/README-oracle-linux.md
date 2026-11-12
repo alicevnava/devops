@@ -25,6 +25,7 @@ Este documento é a adaptação do [passo a passo para Amazon Linux 2](README.md
 - [Etapa 12 - Agendamentos](#etapa-12---agendamentos)
 - [Etapa 13 - HTTPS](#etapa-13---https)
 - [Etapa 14 - Finalização e validação](#etapa-14---finalização-e-validação)
+- [Etapa 15 - PDF do processo (wkhtmltopdf)](#etapa-15---pdf-do-processo-wkhtmltopdf)
 - [Testes como usuário](#testes-como-usuário)
 - [Problemas e soluções](#problemas-e-soluções)
 - [Adaptações em relação ao manual](#adaptações-em-relação-ao-manual)
@@ -1345,8 +1346,82 @@ Com `true`, o sistema mostra o aviso de chave de acesso padrão. Para removê-lo
 | Cron | `sudo grep AgendamentoTarefa /var/log/cron \| tail -5` | execuções a cada minuto |
 | Navegador | SIP e SEI com `teste`/`teste` | menu do SIP e Controle de Processos |
 | Infra → Log | SEI e SIP | sem erros sem causa conhecida |
+| PDF do processo | Etapa 15 | `wkhtmltopdf 0.12.6` e módulo `sei_wkhtmltopdf` instalados |
 
 Portas extras que aparecem no `ss` e não são erro: **33060** (protocolo X do MySQL 8), **18983**, **7983** e **44131** (processo java do Solr), **111** (`rpcbind`) e **4330** e **44321** (monitoramento que já vinha na VM). A 3306 e a 8983 escutam em todas as interfaces; o acesso externo é barrado pelo `firewalld` (só `ssh` liberado) e, no Solr, também pelo filtro de IPs.
+
+---
+
+## Etapa 15 - PDF do processo (wkhtmltopdf)
+
+O SEI usa o `wkhtmltopdf` para gerar o **PDF do processo** (ícone "Gerar Arquivo PDF do Processo"). Sem ele, essa função falha; o restante do sistema funciona. O manual pede a versão **0.12.6**, mas não informa onde baixar. O projeto publica os pacotes no GitHub (`wkhtmltopdf/packaging`).
+
+### Instalar
+
+Conferir que ainda não existe:
+
+```bash
+which wkhtmltopdf
+```
+
+Esperado: `no wkhtmltopdf in (...)`.
+
+Testar o endereço do pacote (a VM precisa alcançar o GitHub):
+
+```bash
+curl -sI https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos8.x86_64.rpm | head -n 1
+```
+
+Esperado: `HTTP/2 302` (redirecionamento normal). `404` significa nome de arquivo errado: nem todo tag tem o pacote `centos8`.
+
+Baixar na pasta pessoal (sem `sudo`) e instalar o arquivo local (o `./` faz o `dnf` instalar o arquivo e buscar as dependências):
+
+```bash
+cd ~
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos8.x86_64.rpm
+sudo dnf install -y ./wkhtmltox-0.12.6-1.centos8.x86_64.rpm
+wkhtmltopdf --version
+which wkhtmltopdf
+```
+
+Esperado: `Complete!`, `wkhtmltopdf 0.12.6 (with patched qt)` e `/usr/local/bin/wkhtmltopdf`.
+
+> `sudo -u apache wkhtmltopdf --version` dá `command not found` porque o `sudo` não enxerga `/usr/local/bin`. Não é erro: o SEI executa o programa normalmente.
+
+### Liberar a leitura do `/etc/printcap` no SELinux
+
+Ao gerar o PDF do processo, o SELinux bloqueia o `wkhtmltopdf` (que roda como Apache, `httpd_t`) de ler o `/etc/printcap`, que tem o rótulo `cupsd_rw_etc_t`. A tela mostra "Erro gerando PDF". Para ver o bloqueio logo após a tentativa:
+
+```bash
+sudo ausearch -m avc -c wkhtmltopdf -ts recent
+```
+
+Esperado antes da correção: `denied { read } ... comm="wkhtmltopdf" name="printcap" ... tcontext=...cupsd_rw_etc_t`. O aviso `Email option is specified but /usr/lib/sendmail doesn't seem executable` é só do `ausearch` e pode ser ignorado.
+
+Gerar uma regra mínima a partir do bloqueio e conferir o conteúdo antes de aplicar:
+
+```bash
+cd ~
+sudo ausearch -m avc -c wkhtmltopdf | audit2allow -M sei_wkhtmltopdf
+cat sei_wkhtmltopdf.te
+```
+
+Esperado no `.te`: `allow httpd_t cupsd_rw_etc_t:file read;` (só leitura, nada além disso). Se `audit2allow` não existir: `sudo dnf install -y policycoreutils-python-utils`.
+
+Aplicar e conferir:
+
+```bash
+sudo semodule -i sei_wkhtmltopdf.pp
+sudo semodule -l | grep sei_wkhtmltopdf
+```
+
+Esperado: `sei_wkhtmltopdf`. Se ainda falhar, repetir o `ausearch`: um novo `denied` indica outra permissão a liberar (repetir o `audit2allow`).
+
+### Testar
+
+No SEI, abrir um processo → **Gerar Arquivo PDF do Processo** → **Gerar**. Esperado: o navegador baixa o PDF do processo.
+
+> No laboratório, um PDF anexado (documento externo) fez a geração falhar com "Erro na manipulação do documento ...". Com só o memorando marcado o PDF foi gerado, e substituindo o anexo por outro PDF o processo inteiro foi gerado. Se acontecer, gerar sem o documento que apresentou problema ou trocar o arquivo anexado.
 
 ---
 
@@ -1361,6 +1436,7 @@ Executados no SEI com o usuário `teste`:
 | Assinar | Assinar → cargo → senha | ✔ |
 | Pesquisar conteúdo | Pesquisa → Documentos → Texto para Pesquisa | ✔ (só depois de assinado) |
 | Indexação no Solr | `numDocs` do índice `sei-protocolos` | ✔ passou de 0 para 3 |
+| PDF do processo | Gerar Arquivo PDF do Processo | ✔ depois da Etapa 15 (um PDF anexado específico falhou, ver a Etapa 15) |
 
 Conferir o repositório de arquivos e o Solr:
 
@@ -1369,7 +1445,7 @@ sudo ls -lR /var/sei/arquivos | head -20
 curl -s "http://127.0.0.1:8983/solr/admin/cores?action=STATUS&core=sei-protocolos" | grep numDocs
 ```
 
-Não repetidos nesta execução (os resultados da versão AWS valem como referência): criar processo, gerar PDF do processo (esperado falhar sem o `wkhtmltopdf`), concluir e reabrir processo e os testes do SIP (registro de acessos, novo usuário, permissões).
+Não repetidos nesta execução (os resultados da versão AWS valem como referência): criar processo, concluir e reabrir processo e os testes do SIP (registro de acessos, novo usuário, permissões).
 
 > O editor abre em pop-up: liberar pop-ups do site no navegador.
 >
@@ -1411,7 +1487,9 @@ Não repetidos nesta execução (os resultados da versão AWS valem como referê
 | Log do SIP: "Erro enviando correspondência eletrônica" | Não há servidor de e-mail na VM | Esperado no laboratório; desativar o `testarAgendamento` |
 | Pesquisa por documento não encontra | Rascunho não é indexado | Assinar o documento |
 | `ERR_CONNECTION_RESET` ao acessar pelo IP público | Firewall/rede da nuvem não repassam a porta 80 | Usar o túnel SSH do MobaXterm |
-| PDF do processo não é gerado | wkhtmltopdf não instalado | Instalar o wkhtmltopdf 0.12.6 |
+| PDF do processo não é gerado | `wkhtmltopdf` não instalado | Etapa 15 (instalar o 0.12.6) |
+| "Erro gerando PDF" com o `wkhtmltopdf` instalado | SELinux bloqueia a leitura do `/etc/printcap` | `ausearch -m avc -c wkhtmltopdf` e módulo `sei_wkhtmltopdf` (Etapa 15) |
+| "Erro na manipulação do documento" em um PDF anexado | O SEI não conseguiu processar aquele PDF | Gerar sem esse documento ou anexar outro arquivo |
 | Aviso de chave de acesso padrão | `Producao => true` com a chave da base | Gerar novas chaves no SIP |
 
 Comandos de diagnóstico:
@@ -1469,7 +1547,6 @@ sudo ausearch -m avc -ts recent
 
 **Funcionalidades**
 
-- wkhtmltopdf 0.12.6 para gerar PDF do processo
 - Extensão uploadprogress (`/opt/sei/config/uploadprogress`)
 - Extensão sodium (SEI Federação)
 - Servidor de e-mail (por exemplo, `sendmail` ou um relay SMTP no `InfraMail`) para os agendamentos de teste e as notificações

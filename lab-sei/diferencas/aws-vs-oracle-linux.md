@@ -166,6 +166,10 @@ A contagem foi acrescentada porque, no Oracle Linux, um comando de permissões n
 
 Igual, com itens a mais no checklist do Oracle Linux: contagem de arquivos fora de `0640`, rótulos do SELinux, booleans do SELinux e execução do cron. Também há portas extras no `ss` (33060 do MySQL 8, entre outras).
 
+### Etapa 15 - PDF do processo (`wkhtmltopdf`)
+
+No Oracle Linux foi instalado o `wkhtmltopdf` 0.12.6-1 (pacote `centos8` do projeto, baixado do GitHub) e o PDF do processo passou a funcionar. Com o SELinux em `Enforcing`, o `wkhtmltopdf` (que roda como Apache) foi bloqueado ao ler o `/etc/printcap`, e foi preciso um módulo de política (`sei_wkhtmltopdf`, gerado com `audit2allow`) que autoriza só essa leitura. Na AWS (SELinux `Disabled`) o programa não foi instalado e a função não foi testada.
+
 ---
 
 ## O que existe só no Oracle Linux
@@ -174,7 +178,8 @@ Igual, com itens a mais no checklist do Oracle Linux: contagem de arquivos fora 
 | --- | --- |
 | 6 booleans do SELinux (`setsebool -P`) | Permitem que o Apache/PHP abra conexões, use o Memcached, o banco, LDAP e NFS |
 | Rótulo `httpd_sys_rw_content_t` | Permite ao Apache gravar nas `temp` e em `/var/sei/arquivos` |
-| `policycoreutils-python-utils` | Traz o `semanage` |
+| `policycoreutils-python-utils` | Traz o `semanage` e o `audit2allow` |
+| Módulo `sei_wkhtmltopdf` | Libera a leitura do `/etc/printcap` pelo `wkhtmltopdf` (PDF do processo) |
 | `dnf module enable` (PHP e MySQL) | Escolhe a versão antes de instalar |
 | Túnel SSH do MobaXterm | Acesso pelo navegador sem DNS nem portas liberadas no firewall |
 | `127.0.0.1` no endereço do Solr | Evita a resolução de `localhost` por IPv6 |
@@ -208,7 +213,7 @@ Igual, com itens a mais no checklist do Oracle Linux: contagem de arquivos fora 
 
 | Limitação | Efeito |
 | --- | --- |
-| Sem `wkhtmltopdf` | Não gera o PDF do processo |
+| Sem `wkhtmltopdf` (só na AWS) | Não gera o PDF do processo |
 | Sem `uploadprogress` | Sem barra de progresso no upload |
 | Sem JODConverter | Documentos do OpenOffice não entram no PDF do processo |
 | `https => false` | Sem HTTPS nos sistemas (só o Apache responde na 443) |
