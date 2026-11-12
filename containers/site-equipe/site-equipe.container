@@ -1,0 +1,13 @@
+[Unit]
+Description=Site da equipe em container
+
+[Container]
+Image=localhost/site-equipe:1.1
+ContainerName=site-equipe
+PublishPort=8090:80
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
