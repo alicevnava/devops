@@ -1,14 +1,13 @@
 services:
   app1:
-    build: ./app
-    image: localhost/app-equipe:1.0
+    image: ghcr.io/alicevnava/app-equipe:1.2
     networks:
       equipe:
         aliases:
           - app
 
   app2:
-    image: localhost/app-equipe:1.0
+    image: ghcr.io/alicevnava/app-equipe:1.2
     networks:
       equipe:
         aliases:
