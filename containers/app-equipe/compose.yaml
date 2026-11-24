@@ -1,0 +1,30 @@
+services:
+  app1:
+    build: ./app
+    image: localhost/app-equipe:1.0
+    networks:
+      equipe:
+        aliases:
+          - app
+
+  app2:
+    image: localhost/app-equipe:1.0
+    networks:
+      equipe:
+        aliases:
+          - app
+
+  proxy:
+    image: docker.io/library/nginx:1.31
+    ports:
+      - "8092:80"
+    volumes:
+      - ./proxy/default.conf:/etc/nginx/conf.d/default.conf:ro,Z
+    networks:
+      - equipe
+    depends_on:
+      - app1
+      - app2
+
+networks:
+  equipe:
