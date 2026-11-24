@@ -1,6 +1,15 @@
-FROM docker.io/library/python:3.12-slim
+FROM docker.io/library/python:3.12-alpine
+
+LABEL org.opencontainers.image.source="https://github.com/alicevnava/devops" \
+      org.opencontainers.image.description="Aplicação de exemplo em Python que responde em JSON" \
+      org.opencontainers.image.version="1.2"
+
 WORKDIR /app
 COPY app.py .
 USER 1001
 EXPOSE 5000
+
+HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
+  CMD wget -q -O /dev/null http://127.0.0.1:5000/ || exit 1
+
 CMD ["python3", "app.py"]
